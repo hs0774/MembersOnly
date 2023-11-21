@@ -1,8 +1,53 @@
 body {
-  padding: 50px;
+  padding: 0;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
 }
+
+.container {
+  margin: 12px 12px 0px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid 1px red;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.form-group label {
+  margin-right: 0;
+}
+
+
+.submit-group {
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Ensure button takes the full width */
+  padding: 8px 0;
+}
+.submit-group button {
+  width: 50%; /* Adjust button width as needed */
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="checkbox"] {
+  border: none;
+  border-bottom: 1px solid #ccc; /* Add a bottom border for the input */
+  background: none; /* Remove the background */
+  outline: none; /* Remove the outline when focused */
+  /* padding: 4px; 
+  width: 100%; Ensure input takes the full width */
+}
+
+
+
