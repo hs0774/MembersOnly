@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userAccountSchema = new Schema ({
-   firstName:{type:String,minLength:8,maxLength:15,required:true},
-   lastName:{type:String,minLength:8,maxLength:15,required:true},
+   firstname:{type:String,minLength:1,maxLength:20,required:true},
+   lastname:{type:String,minLength:1,maxLength:20,required:true},
    email:{type:String,match:/^\S+@\S+\.\S+$/,required:true,unique:true},
    password:{type:String,minLength:8,required:true},
    messages:[{type:Schema.Types.ObjectId,ref:"Message"}],
