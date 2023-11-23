@@ -9,7 +9,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/userz');
 const boardRouter = require('./routes/board');
 
 const app = express();

@@ -9,15 +9,22 @@ const userAccountSchema = new Schema ({
    password:{type:String,minLength:8,required:true},
    messages:[{type:Schema.Types.ObjectId,ref:"Message"}],
    member:{type:Boolean,default:false},
-   admin:{type:Boolean,default:false},
+   admin:{type:Boolean},
 })
 
-userAccountSchema.virtual("fullname").get(function(){ 
-    return `${this.firstName} ${this.lastName}`
-})
+userAccountSchema.virtual("fullame").get(function () {
+    // To avoid errors in cases where an author does not have either a family name or first name
+    // We want to make sure we handle the exception by returning an empty string for that case
+    let fullname = "";
+    if (this.firstname && this.lastname) {
+      fullname = `${this.firstname}, ${this.lastname}`;
+    }
+  
+    return fullname;
+  });
 
 userAccountSchema.virtual("url").get(function(){
-    return `/board/account/${this._id}`
+    return `/board/user/${this._id}`
 })
 
 module.exports = mongoose.model('Account',userAccountSchema);

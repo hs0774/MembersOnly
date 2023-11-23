@@ -9,10 +9,8 @@ router.get('/', function(req, res, next) {
   //make this the homepage with user messages 
 });
 
-//get request for sign up form must be before any route that uses id
-router.get('/sign-up', userAccount_controller.sign_up_get)
+router.get("/login", userAccount_controller.log_in_get)
 
-//post request after created user
-router.post('/sign-up',userAccount_controller.sign_up_post)
+router.post("/login", userAccount_controller.log_in_post)
 
 module.exports = router;
