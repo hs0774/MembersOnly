@@ -113,9 +113,36 @@ exports.account_activate_get = asyncHandler(async (req,res,next) => {
     res.render("account_activate");
 })
 
-exports.account_activate_post = asyncHandler(async (req,res,next) => {
-    res.send('member confirmation page coming soon')
-})
+//activate account by checking if passcode matches 
+exports.account_activate_post = [
+  body("password", "Password must be 'password'")
+    .trim()
+    .escape()
+    .isLength({ min: 8 })
+    .equals("password")
+    .withMessage("Password must be 'password'"),
+  body("Cpassword","Passwords do not match")
+    .custom((value,{ req }) =>  {
+        if (value !== req.body.password) {
+            throw new Error("Passwords do not match");
+        }
+        return true;
+  }),  
+  asyncHandler(async(req,res,next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        res.render("account_activate");
+    } else {
+        await Account.findOneAndUpdate(
+            { email: req.session.email },
+            { $set: { member: true } },
+            { new: true } // This option returns the updated document
+        )
+        res.redirect("/board/message/create");
+    }
+  })  
+]
 
 exports.log_in_get = asyncHandler(async (req,res,next) => {
     res.render("login")

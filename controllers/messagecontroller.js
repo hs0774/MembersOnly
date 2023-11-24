@@ -37,7 +37,24 @@ exports.message_create_post = [
         .escape(),
     asyncHandler(async (req,res,next) => {
         const errors = validationResult(req);
-        console.log(req.session)
+        const user = await Account.findOne({email: req.session.email}) 
+
+        const newMessage = new Message ({
+            title:req.body.title,
+            timestamp:Date.now(),
+            content:req.body.messageContent,
+            author: user._id,
+        })
+
+        if(!errors.isEmpty()){
+            res.render("create_message", {
+                title:req.body.title,
+                messageContent:req.body.messageContent,
+            })
+        } else {
+            await newMessage.save(),
+            res.redirect("/")
+        }
 
     })    
 ]
