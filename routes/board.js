@@ -4,6 +4,13 @@ const router = express.Router();
 const message_controller = require("../controllers/messagecontroller")
 const userAccount_controller = require("../controllers/userAccountcontroller");
 
+// const requireLogin = (req,res,next) => {
+//     if(!req.session.loggedIn) {
+//         res.redirect("/login")
+//     } else {
+//         next();
+//     }
+// }
 
 /* board home page, what will this be? . */
 router.get('/', userAccount_controller.index)
@@ -27,6 +34,9 @@ router.get("/login", userAccount_controller.log_in_get)
 
 //let user login post 
 router.post("/login", userAccount_controller.log_in_post)
+
+router.post("/logout", userAccount_controller.log_out_post)
+
 
 //update user must match user unless is admin 
 router.get('/user/:id/update',userAccount_controller.account_update_get)

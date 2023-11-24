@@ -61,7 +61,6 @@ exports.sign_up_post = [
         }),  
     asyncHandler(async (req,res,next) => {
         const errors = validationResult(req);
-        console.log(req.body)
         const isAdmin = req.body.admin ==='on'? true:false;
         const saltedPassword = await bcrypt.hash(req.body.password,10);
         
@@ -87,8 +86,11 @@ exports.sign_up_post = [
             return;            
         } else {
             await newAccount.save();
+            req.session.email = req.body.email;
+            req.session.loggedIn = true;
+            console.log(req.session)
             if(isAdmin){
-            res.redirect(newAccount.url);
+            res.redirect("/board/message/create");
             } else {
                 res.redirect("/board/user/member")
             }
@@ -119,6 +121,35 @@ exports.log_in_get = asyncHandler(async (req,res,next) => {
     res.render("login")
 })
 
-exports.log_in_post = asyncHandler(async (req,res,next) => {
-    
+exports.log_in_post =  asyncHandler(async (req,res,next) => {
+    const accountInfo = await Account.findOne({email:req.body.email});
+
+    if(!accountInfo){
+        res.render("login", { error: 'Invalid email or password' });
+    }
+
+    const matchingpass = await bcrypt.compare(req.body.password,accountInfo.password)
+    if(!matchingpass){
+        res.render("login", { error: 'Invalid email or password' });
+    }
+    req.session.email = req.body.email;
+    req.session.loggedIn = true;
+
+    if(accountInfo.member === true){
+        res.redirect("/board/message/create") 
+    } else {
+        res.redirect("/board/user/member")
+    }
+})
+
+exports.log_out_post = asyncHandler(async (req,res,next) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            res.redirect('/board'); // Redirect to homepage or another appropriate page
+        } else {
+            console.log(req.session)
+            res.redirect('/login'); // Redirect to login page after logout
+        }
+    });
 })
