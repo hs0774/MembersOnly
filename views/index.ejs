@@ -2,10 +2,39 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/board.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="header">
+      <div class="title">
+        <h1><%= title %></h1>
+        <p>Welcome to <%= title %>, sign up or log in to see who wrote what!</p>
+      </div>
+      <div class="title">
+        <button>Sign up</button>
+        <button>Log in</button>
+      </div>
+    </div>
+    <!-- <p>Account: <%= accounts[0] %></p> -->
+    <div class="container">
+      <div class="item">
+        <p>Title: <%= messages[0].title %></p>
+        <p>Message: <%= messages[0].content %></p>
+        <p>Time added: <%= loggedIn ? [0].date_formatted : "" %></p>
+        <p>Author: <%= loggedIn? messages[0].author.fullname:"" %></p>
+      </div>
+      <div class="item">
+        <p>Title: <%= messages[1].title %></p>
+        <p>Message: <%= messages[1].content %></p>
+        <p>Time added: <%= loggedIn ? [1].date_formatted : "" %></p>
+        <p>Author: <%= loggedIn? messages[1].author.fullname:"" %></p>
+      </div>
+      <div class="item">
+        <p>Title: <%= messages[2].title %></p>
+        <p>Message: <%= messages[2].content %></p>
+        <p>Time added: <%= loggedIn ? [2].date_formatted : "" %></p>
+        <p>Author: <%= loggedIn? messages[2].author.fullname:"" %></p>
+      </div>
+    </div>
   </body>
 </html>

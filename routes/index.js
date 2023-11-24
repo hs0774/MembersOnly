@@ -4,10 +4,10 @@ const router = express.Router();
 const userAccount_controller = require("../controllers/userAccountcontroller");
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-  //make this the homepage with user messages 
-});
+// router.get('/', function(req, res, next) {
+
+//   res.render('index', { title: 'Members Only Club' });
+// });
 
 router.get("/login", userAccount_controller.log_in_get)
 

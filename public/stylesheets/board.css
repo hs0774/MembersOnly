@@ -1,0 +1,23 @@
+body{
+    padding:0;
+    margin:0;
+}
+.container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:4px;
+}
+
+.item{
+    border: solid 1px red;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 8px 8px 8px;
+    margin-top: -12px;
+    background-color: green;
+    margin-bottom: 12px;
+}

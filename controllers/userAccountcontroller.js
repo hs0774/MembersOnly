@@ -7,7 +7,17 @@ const { body, validationResult } = require("express-validator");
 
 //HOMEPAGE
 exports.index = asyncHandler(async (req,res,next) => {
-    res.send("Homepage not created yet")
+    const [accounts,messages,notlogged] = await Promise.all([
+        Account.find().exec(),
+        Message.find().populate("author").exec(),
+        Message.find({}, 'title message').exec(),
+    ])
+    res.render('index', { 
+        title: 'Members Only Club',
+        accounts:accounts,
+        messages:messages,
+        loggedIn: req.session.loggedIn,
+    });
 })
 
 //READ
