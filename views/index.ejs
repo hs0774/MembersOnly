@@ -8,33 +8,38 @@
     <div class="header">
       <div class="title">
         <h1><%= title %></h1>
-        <p>Welcome to <%= title %>, sign up or log in to see who wrote what!</p>
+        <p>Welcome to <%= title %>, where only members can see who wrote what!</p>
       </div>
       <div class="title">
-        <button>Sign up</button>
-        <button>Log in</button>
+        <% if (loggedIn && member) { %>
+          <a href="/board/message/create" class="button">Create new message</a>
+          <form action="/board/logout" method="POST">
+            <button type="submit">Logout</button>
+        </form> 
+        <% } else { %>
+          <form action="/board/user/sign_up" method="GET">
+            <button type="submit">Sign up</button>
+          </form> 
+          <form action="/board/login" method="GET">
+            <button type="submit">Log in</button>
+          </form> 
+        <% } %>
       </div>
     </div>
-    <!-- <p>Account: <%= accounts[0] %></p> -->
     <div class="container">
-      <div class="item">
-        <p>Title: <%= messages[0].title %></p>
-        <p>Message: <%= messages[0].content %></p>
-        <p>Time added: <%= loggedIn ? [0].date_formatted : "" %></p>
-        <p>Author: <%= loggedIn? messages[0].author.fullname:"" %></p>
-      </div>
-      <div class="item">
-        <p>Title: <%= messages[1].title %></p>
-        <p>Message: <%= messages[1].content %></p>
-        <p>Time added: <%= loggedIn ? [1].date_formatted : "" %></p>
-        <p>Author: <%= loggedIn? messages[1].author.fullname:"" %></p>
-      </div>
-      <div class="item">
-        <p>Title: <%= messages[2].title %></p>
-        <p>Message: <%= messages[2].content %></p>
-        <p>Time added: <%= loggedIn ? [2].date_formatted : "" %></p>
-        <p>Author: <%= loggedIn? messages[2].author.fullname:"" %></p>
-      </div>
+      <% messages.forEach(message => { %>
+        <div class="item">
+          <p>Title: <%= message.title %></p>
+          <p>Message: <%= message.content %></p>
+          <p>Date: <%= member ? message.date_formatted: "" %></p>
+          <p>Author: <%= member? message.author.fullname: "" %></p>
+          <% if (admin || (currUser && message.author._id.toString() === currUser._id.toString())) { %>
+            <form action='board/message/<%= message._id%>/delete'method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          <% } %>
+        </div>
+      <% }) %> 
     </div>
   </body>
 </html>

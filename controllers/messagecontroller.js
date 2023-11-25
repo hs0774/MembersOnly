@@ -53,7 +53,7 @@ exports.message_create_post = [
             })
         } else {
             await newMessage.save(),
-            res.redirect("/")
+            res.redirect("/board")
         }
 
     })    
@@ -66,8 +66,16 @@ exports.message_delete_get = asyncHandler(async (req,res,next) => {
 })
 
 //handle delete on post 
-exports.message__delete_post = asyncHandler(async (req,res,next) => {
-    res.send("delete post will be created soon")
+exports.message_delete_post = asyncHandler(async (req,res,next) => {
+    // console.log(req.params.id)
+    const message = await Message.findById(req.params.id);
+    if(!message){
+        res.redirect("/board");
+    } else {
+        await Message.findByIdAndDelete(req.params.id);
+        res.redirect("/board")
+    }
+    
 })
 
 //UPDATE

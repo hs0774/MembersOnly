@@ -69,7 +69,7 @@ router.get('/message/:id',message_controller.message_detail)
 router.get('/message/:id/delete',message_controller.message_delete_get)
 
 //after deletion post request 
-router.post('/message/:id/delete',message_controller.message__delete_post)
+router.post('/message/:id/delete',message_controller.message_delete_post)
 
 //update message must match user unless is admin 
 router.get('/message/:id/update',message_controller.message_update_get)

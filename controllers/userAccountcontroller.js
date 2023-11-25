@@ -7,16 +7,19 @@ const { body, validationResult } = require("express-validator");
 
 //HOMEPAGE
 exports.index = asyncHandler(async (req,res,next) => {
-    const [accounts,messages,notlogged] = await Promise.all([
+    const [accounts,messages,currUser] = await Promise.all([
         Account.find().exec(),
         Message.find().populate("author").exec(),
-        Message.find({}, 'title message').exec(),
+        req.session.email ? Account.findOne({ email: req.session.email }) : null,
     ])
     res.render('index', { 
         title: 'Members Only Club',
         accounts:accounts,
         messages:messages,
         loggedIn: req.session.loggedIn,
+        member: currUser ? currUser.member : false,
+        admin: currUser ? currUser.admin : false,
+        currUser:currUser,
     });
 })
 
