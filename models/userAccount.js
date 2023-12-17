@@ -28,5 +28,3 @@ userAccountSchema.virtual("url").get(function(){
 })
 
 module.exports = mongoose.model('Account',userAccountSchema);
-
-//preHook?
