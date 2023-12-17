@@ -23,18 +23,6 @@ exports.index = asyncHandler(async (req,res,next) => {
     });
 })
 
-//READ
-//Display list of all users 
-exports.user_list = asyncHandler(async (req,res,next) => {
-    res.send('user list coming soon');
-})
-
-//display list of single user 
-exports.user_detail = asyncHandler(async (req,res,next) => {
-    res.send(`user ${req.params.id} details coming soon`);
-})
-
-
 //CREATE
 //display sign up form on get
 exports.sign_up_get = asyncHandler(async (req,res,next) => {
@@ -101,7 +89,6 @@ exports.sign_up_post = [
             await newAccount.save();
             req.session.email = req.body.email;
             req.session.loggedIn = true;
-            console.log(req.session)
             if(isAdmin){
             res.redirect("/board/message/create");
             } else {
@@ -110,17 +97,6 @@ exports.sign_up_post = [
         }
     }),
 ]
-
-//UPDATE
-//display user info update on get 
-exports.account_update_get = asyncHandler(async (req,res,next) => {
-    res.send('account update form coming soon')
-})
-
-//handle user info update on post 
-exports.account_update_post = asyncHandler(async (req,res,next) => {
-    res.send('account update post coming soon')
-})
 
 exports.account_activate_get = asyncHandler(async (req,res,next) => {
     res.render("account_activate");
@@ -188,7 +164,6 @@ exports.log_out_post = asyncHandler(async (req,res,next) => {
             console.error('Error destroying session:', err);
             res.redirect('/board'); // Redirect to homepage or another appropriate page
         } else {
-            console.log(req.session)
             res.redirect('/login'); // Redirect to login page after logout
         }
     });
